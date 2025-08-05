@@ -1,27 +1,68 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // Añadido FormsModule
 import { MatFormFieldModule } from "@angular/material/form-field";
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { User } from '../../services/user';
 
 @Component({
   selector: 'app-signup',
-  imports: [CommonModule,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
-    MatSelectModule],
+    MatSelectModule
+  ],
   templateUrl: './signup.html',
-  styleUrl: './signup.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./signup.css'],
 })
+export class SignupComponent {
+  public user = {
+    username: '',
+    password: '',
+    name: '',
+    surname: '',
+    email: '',
+    phone: '',
+  };
 
+  constructor(private userService: User) {}
 
-export class Signup {
+  formSubmit() {
+    console.log('Datos del usuario:', this.user);
+
+    if (!this.user.username) {
+      alert("Username is required");
+      return;
+    }
+
+    this.userService.addUser(this.user).subscribe({
+      next: (data) => {
+        console.log('Respuesta del servidor:', data);
+        alert('User saved successfully');
+        // Resetear el formulario después del registro exitoso
+        this.user = {
+          username: '',
+          password: '',
+          name: '',
+          surname: '',
+          email: '',
+          phone: ''
+        };
+      },
+      error: (error) => {
+        console.error('Error al registrar:', error);
+        alert('There was an error in the system saving user');
+      }
+    });
+  }
 }
-
