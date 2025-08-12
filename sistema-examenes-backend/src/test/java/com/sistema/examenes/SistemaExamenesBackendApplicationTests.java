@@ -10,5 +10,5 @@ class SistemaExamenesBackendApplicationTests {
 	void contextLoads() {
 	}
 
-	/* comment to test be github */
+	/* comment to test github */
 }
