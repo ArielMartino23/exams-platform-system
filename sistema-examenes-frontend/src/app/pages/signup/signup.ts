@@ -8,6 +8,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { User } from '../../services/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-signup',
@@ -35,20 +37,27 @@ export class SignupComponent {
     phone: '',
   };
 
-  constructor(private userService: User) {}
+  constructor(private userService: User, private snack:MatSnackBar) {}
 
   formSubmit() {
     console.log('Datos del usuario:', this.user);
 
     if (!this.user.username) {
-      alert("Username is required");
+      this.snack.open('Username is required', 'Accept',{
+        duration : 3000,
+        verticalPosition : 'top',
+        horizontalPosition : 'right'
+      });
       return;
     }
 
     this.userService.addUser(this.user).subscribe({
       next: (data) => {
         console.log('Respuesta del servidor:', data);
-        alert('User saved successfully');
+        Swal.fire('User saved',
+          'User saved succesfully!',
+          'success'
+        );
         // Resetear el formulario después del registro exitoso
         this.user = {
           username: '',
@@ -61,7 +70,11 @@ export class SignupComponent {
       },
       error: (error) => {
         console.error('Error al registrar:', error);
-        alert('There was an error in the system saving user');
+        this.snack.open('There was a system error', 'Accept',{
+        duration : 3000,
+        verticalPosition : 'top',
+        horizontalPosition : 'right'
+      });
       }
     });
   }

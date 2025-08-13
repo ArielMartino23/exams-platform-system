@@ -6,6 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { Navbar } from "./components/navbar/navbar";
 import { SignupComponent } from "./pages/signup/signup";
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -16,7 +17,8 @@ import { SignupComponent } from "./pages/signup/signup";
     Navbar,
     MatFormFieldModule,
     MatInputModule,
-    SignupComponent
+    SignupComponent,
+    MatSnackBarModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
