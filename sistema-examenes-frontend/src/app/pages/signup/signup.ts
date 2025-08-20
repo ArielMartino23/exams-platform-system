@@ -22,7 +22,8 @@ import Swal from 'sweetalert2'
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    MatFormFieldModule
   ],
   templateUrl: './signup.html',
   styleUrls: ['./signup.css'],

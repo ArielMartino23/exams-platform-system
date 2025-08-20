@@ -1,0 +1,9 @@
+com\sistema\examenes\entities\Role.class
+com\sistema\examenes\entities\UserRole.class
+com\sistema\examenes\repository\UserRepository.class
+com\sistema\examenes\services\UserService.class
+com\sistema\examenes\SistemaExamenesBackendApplication.class
+com\sistema\examenes\repository\RoleRepository.class
+com\sistema\examenes\services\implementation\UserServiceImpl.class
+com\sistema\examenes\controllers\UserController.class
+com\sistema\examenes\entities\User.class
