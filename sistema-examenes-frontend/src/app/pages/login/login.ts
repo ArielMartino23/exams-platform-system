@@ -58,11 +58,27 @@ export class LoginComponent implements OnInit{
         console.log(data);
         this.loginService.loginUser(data.token);
         this.loginService.getCurrentUser().subscribe((user:any) => {
+          this.loginService.setUser(user);
           console.log(user);
+
+          if(this.loginService.getUserRole() == "ADMIN"){
+            //admin dashboard
+            window.location.href = '/admin';
+            this.loginService.loginStatusSubject.next(true);
+          }else if(this.loginService.getUserRole() == "NORMAL"){
+            //user dashboard
+            window.location.href = '/user-dashboard';
+            this.loginService.loginStatusSubject.next(true);
+          }else{
+            this.loginService.logout();
+          }
         })
       },
-      error: (err) => console.log(err)
-    });
+      error: (err) => {
+        console.log(err);
+        this.snack.open('Invalid details, try again', 'Accept', { duration: 3000 });
+        }
+      })
 
 
     console.log('Username:', username, 'Password:', password);

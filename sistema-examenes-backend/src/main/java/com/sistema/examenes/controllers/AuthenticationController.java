@@ -19,6 +19,7 @@ import com.sistema.examenes.configurations.JwtUtils;
 import com.sistema.examenes.entities.JwtRequest;
 import com.sistema.examenes.entities.JwtResponse;
 import com.sistema.examenes.entities.User;
+import com.sistema.examenes.exceptions.UserNotFoundException;
 import com.sistema.examenes.services.implementation.UserDetailsServiceImpl;
 
 
@@ -39,8 +40,7 @@ public class AuthenticationController {
     public ResponseEntity<?> generateToken(@RequestBody JwtRequest jwtRequest) throws Exception {
         try {
             authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch(UserNotFoundException e) {
             throw new Exception("User not found" + e.getMessage());
         }
 

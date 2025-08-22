@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.sistema.examenes.entities.User;
 import com.sistema.examenes.entities.UserRole;
+import com.sistema.examenes.exceptions.UserFoundException;
 import com.sistema.examenes.repository.RoleRepository;
 import com.sistema.examenes.repository.UserRepository;
 import com.sistema.examenes.services.UserService;
@@ -23,11 +24,14 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public User saveUser(User user, Set<UserRole> userRoles) {
+    public User saveUser(User user, Set<UserRole> userRoles) throws UserFoundException {
         User userLocal = this.userRepository.findByUsername(user.getUsername());
         if (userLocal != null) {
             System.out.println("User already exists!");
-            throw new RuntimeException("User already exists!");
+            try {
+                throw new UserFoundException("User already exists!");
+            } catch (UserFoundException ex) {
+            }
         } else {
             for (UserRole userRole : userRoles) {
                 roleRepository.save(userRole.getRole());
